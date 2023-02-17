@@ -1,6 +1,9 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form'
-import { loginUser } from '../../api/user'
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { loginUser } from '../../api/user';
+import { storageSave } from '../../utils/storage';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 const usernameConfig = {
     required: true,
@@ -8,23 +11,41 @@ const usernameConfig = {
 }
 
 const LoginForm = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    // Hooks
+    const {register, handleSubmit, formState: { errors }} = useForm()
+    const {user, setUser} = useUser()
+    const navigate = useNavigate()
 
+    // Local state
     const [loading, setLoading] = useState(false)
+    const [apiError, setApiError] = useState(null)
 
+    // Side effects
+    useEffect(() => {
+        if (user !== null) {
+            navigate('/profile')
+        }
+    }, [user, navigate]) // Empty dependencies - only run once. DELETE COmMENt TODO
+
+    // Event handlers
     const onSubmit = async ({username}) => {
         setLoading(true);
-        const [error, user] = await loginUser(username)
-        console.log('Error: ', error)
-        console.log('User: ', user   )
+
+        const [error, userResponse] = await loginUser(username)
+        if (error !== null) {
+            setApiError(error)
+        }
+        // Data about the user is put into local storage.
+        // Normally only a token would be stored, not the actual user object.
+        if (userResponse !== null) {
+            storageSave("translator-user", userResponse)
+            setUser(userResponse)
+        }
+
         setLoading(false);
     }
-    console.log(errors)
 
+    // Render Functions
     const errorMessage = (() => {
         if (!errors.username) {
             return null
@@ -58,6 +79,7 @@ const LoginForm = () => {
                 <button type="submit" disabled={loading}>Continue</button>
 
                 {loading && <p>Logging in...</p>}
+                {apiError && <p>{apiError}</p>}
             </form>
         </>
     )
