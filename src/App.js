@@ -5,7 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 import Login from './views/Login';
-import Translation from './views/Translation';
+import Translate from './views/Translate';
 import Profile from './views/Profile';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={ <Login /> } />
-          <Route path="/translation" element={ <Translation /> } />
+          <Route path="/translate" element={ <Translate /> } />
           <Route path="/profile" element={ <Profile /> } />
         </Routes>
       </div>
