@@ -9,3 +9,7 @@ export const storageRead = key => {
     }
     return null // If no data is found for that key.
 }
+
+export const storageDelete = key => {
+    localStorage.removeItem(key)
+}
