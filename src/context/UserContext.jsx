@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react"
+import { storageRead } from "../utils/storage"
+import { STORAGE_KEY_USER } from "../const/storageKeys"
 
 // Context -> exposes the state - creating a context and pulling out the context's value from the context item.
 const UserContext = createContext() // TODO: camelCasing or PascalCasing?
@@ -11,7 +13,7 @@ export const useUser = () => {
 // Provider -> manages the state
 // We will define the state above in our provider.
 const UserProvider = ({children}) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(storageRead(STORAGE_KEY_USER));
 
     const state = {
         user,
@@ -26,4 +28,4 @@ const UserProvider = ({children}) => {
     )
 }
 export default UserProvider
-// We're exposing the provider, not the context. The context we are exposing with out custom useUser() hook.
+// We're exposing the provider, not the context. The context we are exposing with our custom useUser() hook.
