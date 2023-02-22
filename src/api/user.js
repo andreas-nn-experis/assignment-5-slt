@@ -52,3 +52,16 @@ export const loginUser = async (username) => {
     // If previous conditions were false, nothing went wrong, but the user does NOT exist yet.
     return await createUser(username)
 }
+
+export const findUserById = async (userId) => {
+    try {
+        const response = await fetch(`${apiUrl}/${userId}`)
+        if (!response.ok){
+            throw new Error("Could not fetch user")
+        }
+        const user = await response.json()
+        return [null, user]
+    } catch (error) {
+        return [error.message, null]
+    }
+}

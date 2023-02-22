@@ -1,0 +1,27 @@
+* {
+    margin: 2;
+    padding: 2;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.navbar {
+    /* margin: auto; */
+    padding: 1rem;
+    background: #E7B355;
+    color: white;
+    font-size: 32px;
+
+}
+
+#navigation{
+    display: flex;
+    margin: auto;
+    box-sizing: content-box;
+}
+#nav-profile {
+    text-align: right;
+    
+}
+#nav-translation {
+    text-align: center;
+}
