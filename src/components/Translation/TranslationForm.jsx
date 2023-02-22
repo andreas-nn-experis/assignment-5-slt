@@ -66,7 +66,7 @@ function TranslationForm() {
             />
         </label>
         <input type="submit" />
-        <TranslationSentenceToSigns sentence={translate}/>
+        <TranslationSentenceToSigns sentence={name}/>
     </form>
     )
 }
